@@ -17,7 +17,7 @@ export class FilmsService {
 
     const items = films.map((film) => this.toFilmDTO(film));
 
-    return { total: 0, items };
+    return { total: items.length, items };
   }
 
   async findSchedule(id: string): Promise<GetScheduleDTO> {
@@ -25,7 +25,7 @@ export class FilmsService {
 
     const items = schedule.map((session) => this.toSessionDTO(session));
 
-    return { total: 0, items };
+    return { total: items.length, items };
   }
 
   private toFilmDTO(film: IFilm): GetFilmDTO {

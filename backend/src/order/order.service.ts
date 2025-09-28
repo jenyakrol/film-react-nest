@@ -32,7 +32,7 @@ export class OrderService {
 
     const items = tickets.map((ticket) => this.toTicketDTO(ticket, sessions));
 
-    return { total: 2, items };
+    return { total: items.length, items };
   }
 
   private toTicketDTO(
