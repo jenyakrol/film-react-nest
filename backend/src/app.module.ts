@@ -8,7 +8,10 @@ import { FilmsController } from './films/films.controller';
 import { OrderController } from './order/order.controller';
 import { FilmsService } from './films/films.service';
 import { OrderService } from './order/order.service';
-import { FilmsRepository } from './films/films.repository';
+import { FilmsRepository } from './films/repositories/PostgreSQL/films.repository';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Film } from './films/models/PostgreSQL/film.model';
+import { Schedule } from './films/models/PostgreSQL/schedule.model';
 
 @Module({
   imports: [
@@ -20,7 +23,17 @@ import { FilmsRepository } from './films/films.repository';
       rootPath: path.join(__dirname, '..', 'public'),
       serveRoot: '/',
     }),
-    // @todo: Добавьте раздачу статических файлов из public
+    TypeOrmModule.forRoot({
+      type: process.env.DATABASE_DRIVER as 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: 'films',
+      entities: [Film, Schedule],
+      synchronize: false,
+    }),
+    TypeOrmModule.forFeature([Film, Schedule]),
   ],
   controllers: [FilmsController, OrderController],
   providers: [configProvider, FilmsService, OrderService, FilmsRepository],

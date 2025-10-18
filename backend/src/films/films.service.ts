@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { FilmsRepository } from './films.repository';
 import {
   GetFilmDTO,
   GetFilmsDTO,
@@ -7,6 +6,7 @@ import {
   SessionDTO,
 } from './dto/films.dto';
 import { IFilm, ISession } from './interfaces/film.interface';
+import { FilmsRepository } from './repositories/PostgreSQL/films.repository';
 
 @Injectable()
 export class FilmsService {

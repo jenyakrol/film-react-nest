@@ -3,12 +3,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Film } from './models/film.model';
-import { IFilm } from './interfaces/film.interface';
+import { IFilmsRepository } from 'src/films/interfaces/films-repository.interface';
+import { Film } from 'src/films/models/MongoDB/film.model';
 
 @Injectable()
-export class FilmsRepository {
-  async findById(id: string): Promise<IFilm> {
+export class FilmsRepository implements IFilmsRepository {
+  async findById(id: string) {
     const film = await Film.findOne({ id });
 
     if (!film) throw new NotFoundException('Film not found');
@@ -16,7 +16,7 @@ export class FilmsRepository {
     return film;
   }
 
-  findAll(): Promise<IFilm[]> {
+  findAll() {
     return Film.find({});
   }
 
@@ -24,7 +24,7 @@ export class FilmsRepository {
     id: string,
     sessionId: string,
     position: `${number}:${number}`,
-  ): Promise<IFilm> {
+  ) {
     const film = await Film.findOne({ id });
 
     if (!film) throw new NotFoundException('Film not found');
