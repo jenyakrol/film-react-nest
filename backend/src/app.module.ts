@@ -12,6 +12,8 @@ import { FilmsRepository } from './films/repositories/PostgreSQL/films.repositor
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Film } from './films/models/PostgreSQL/film.model';
 import { Schedule } from './films/models/PostgreSQL/schedule.model';
+import { LoggerModule } from './common/logger/logger.module';
+import { LoggerService } from './common/logger/logger.service';
 
 @Module({
   imports: [
@@ -25,17 +27,24 @@ import { Schedule } from './films/models/PostgreSQL/schedule.model';
     }),
     TypeOrmModule.forRoot({
       type: process.env.DATABASE_DRIVER as 'postgres',
-      host: 'localhost',
-      port: 5432,
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT),
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
-      database: 'films',
+      database: process.env.DATABASE_NAME,
       entities: [Film, Schedule],
       synchronize: false,
     }),
     TypeOrmModule.forFeature([Film, Schedule]),
+    LoggerModule,
   ],
   controllers: [FilmsController, OrderController],
-  providers: [configProvider, FilmsService, OrderService, FilmsRepository],
+  providers: [
+    configProvider,
+    FilmsService,
+    OrderService,
+    FilmsRepository,
+    LoggerService,
+  ],
 })
 export class AppModule {}

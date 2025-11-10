@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { IFilmsRepository } from 'src/films/interfaces/films-repository.interface';
-import { Film } from 'src/films/models/MongoDB/film.model';
+import { IFilmsRepository } from '@/films/interfaces/films-repository.interface';
+import { Film } from '@/films/models/MongoDB/film.model';
 
 @Injectable()
 export class FilmsRepository implements IFilmsRepository {

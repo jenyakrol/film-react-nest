@@ -5,9 +5,9 @@ import {
   TicketDTO,
   TicketResponseDTO,
 } from './dto/order.dto';
-import { IFilm, ISession } from 'src/films/interfaces/film.interface';
+import { IFilm, ISession } from '@/films/interfaces/film.interface';
 import { randomUUID } from 'crypto';
-import { FilmsRepository } from 'src/films/repositories/PostgreSQL/films.repository';
+import { FilmsRepository } from '@/films/repositories/PostgreSQL/films.repository';
 
 @Injectable()
 export class OrderService {
