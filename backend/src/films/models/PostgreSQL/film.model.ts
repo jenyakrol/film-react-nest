@@ -1,4 +1,4 @@
-import { IFilm } from 'src/films/interfaces/film.interface';
+import { IFilm } from '@/films/interfaces/film.interface';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Schedule } from './schedule.model';
 

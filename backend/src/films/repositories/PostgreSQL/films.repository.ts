@@ -4,9 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IFilmsRepository } from 'src/films/interfaces/films-repository.interface';
-import { Film } from 'src/films/models/PostgreSQL/film.model';
-import { Schedule } from 'src/films/models/PostgreSQL/schedule.model';
+import { IFilmsRepository } from '@/films/interfaces/films-repository.interface';
+import { Film } from '@/films/models/PostgreSQL/film.model';
+import { Schedule } from '@/films/models/PostgreSQL/schedule.model';
 import { Repository } from 'typeorm';
 
 @Injectable()

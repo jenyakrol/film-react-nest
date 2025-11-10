@@ -1,4 +1,4 @@
-import { ISession } from 'src/films/interfaces/film.interface';
+import { ISession } from '@/films/interfaces/film.interface';
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Film } from './film.model';
 

@@ -1,0 +1,47 @@
+services:
+  app:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    image: ghcr.io/jenyakrol/film-react-nest/backend:latest
+    ports:
+      - "3000:3000"
+    container_name: film-backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_USER=new_user
+      - DATABASE_PASSWORD=1
+      - DATABASE_DRIVER=postgres
+      - DATABASE_HOST=postgres
+      - DATABASE_NAME=films
+      - DATABASE_PORT=5432
+      - logger=dev
+  postgres:
+    image: "postgres:16"
+    environment:
+      - POSTGRES_USER=new_user
+      - POSTGRES_PASSWORD=1
+      - POSTGRES_DB=films
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: film-pgadmin
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=jenyakrol@yandex.ru
+      - PGADMIN_DEFAULT_PASSWORD=1
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+  react-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: ghcr.io/jenyakrol/film-react-nest/frontend:latest
+    ports:
+      - "4000:80"
+    container_name: film-frontend
+    restart: unless-stopped
+    environment:
+      - VITE_API_URL=http://localhost:3000/api/afisha
+      - VITE_CDN_URL=http://localhost:3000/content/afisha
