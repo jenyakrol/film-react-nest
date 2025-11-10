@@ -34,3 +34,6 @@ jobs:
           context: ./frontend
           push: true
           tags: ghcr.io/jenyakrol/film-react-nest/frontend:latest
+          build-args: |
+            VITE_API_URL=http://xlo-film.nomorepartiessbs.ru:3000/api/afisha
+            VITE_CDN_URL=http://xlo-film.nomorepartiessbs.ru:3000/content/afisha
