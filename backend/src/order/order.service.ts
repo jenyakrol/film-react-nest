@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { FilmsRepository } from 'src/films/films.repository';
 import {
   PostOrderRequestDTO,
   PostOrderResponseDTO,
   TicketDTO,
   TicketResponseDTO,
 } from './dto/order.dto';
-import { ISession } from 'src/films/interfaces/film.interface';
+import { IFilm, ISession } from 'src/films/interfaces/film.interface';
 import { randomUUID } from 'crypto';
+import { FilmsRepository } from 'src/films/repositories/PostgreSQL/films.repository';
 
 @Injectable()
 export class OrderService {
@@ -16,18 +16,18 @@ export class OrderService {
   async takePlace(body: PostOrderRequestDTO): Promise<PostOrderResponseDTO> {
     const { tickets } = body;
 
-    const films = await Promise.all(
-      tickets.map(async ({ film, session, row, seat }) =>
-        this.filmsRepository.findOneAndTakePlace(
-          film,
-          session,
-          `${row}:${seat}`,
-        ),
-      ),
-    );
+    const films: IFilm[] = [];
+    for (const { film, session, row, seat } of tickets) {
+      const newFilm = await this.filmsRepository.findOneAndTakePlace(
+        film,
+        session,
+        `${row}:${seat}`,
+      );
+      films.push(newFilm);
+    }
 
-    const sessions = tickets.map(({ film, session }) =>
-      films.find((f) => f.id === film).schedule.find((s) => s.id === session),
+    const sessions = tickets.map(({ session }, index) =>
+      films[index].schedule.find((s) => s.id === session),
     );
 
     const items = tickets.map((ticket) => this.toTicketDTO(ticket, sessions));

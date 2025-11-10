@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IFilm } from '../interfaces/film.interface';
+import { IFilm } from '../../../films/interfaces/film.interface';
 
 const filmSchema = new mongoose.Schema<IFilm>({
   id: { type: String },
